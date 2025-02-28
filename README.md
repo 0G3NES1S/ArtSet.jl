@@ -10,8 +10,6 @@
 
 #### ArtSet.jl is a terminal text output formatting Julia package that brings to you a few ways to format terminal text output using ANSI escape codes.
 
-> Current package version: v0.1 
-
 ### Here is a simple example:
 
 ```julia
