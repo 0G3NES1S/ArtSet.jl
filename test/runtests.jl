@@ -33,8 +33,8 @@ using ArtSet
         B = UInt8(10),
     )
 
-    @test haskey(Tools.ColorsKit[:CRAFTED][:MyColor1Yeah!])
-    @test haskey(Tools.ColorsKit[:CRAFTED][:MyColor2Yeah!])
+    @test haskey(Tools.ColorsKit[:CRAFTED], :MyColor1Yeah!)
+    @test haskey(Tools.ColorsKit[:CRAFTED], :MyColor2Yeah!)
 
     @test typeof(MyColor1) == Tools.CraftIn256
     @test typeof(MyColor2) == Tools.CraftInRGB 
@@ -76,8 +76,8 @@ end
     Tools.importc(MyColor3; ID=:MyColor3Yeah!)
     Tools.importc(MyColor4; ID="MyColor4Yeah!")
 
-    @test haskey(Tools.ColorsKit[:CRAFTED][:MyColor3Yeah!])
-    @test haskey(Tools.ColorsKit[:CRAFTED][:MyColor4Yeah!])
+    @test haskey(Tools.ColorsKit[:CRAFTED], :MyColor3Yeah!)
+    @test haskey(Tools.ColorsKit[:CRAFTED], :MyColor4Yeah!)
 
 end
 
@@ -113,5 +113,5 @@ end
 
     Tools.Draw(MyColor1; TEXT="Hello World!")
     Tools.Draw(MyColor2; TEXT="Hello World!")
-    
+
 end
