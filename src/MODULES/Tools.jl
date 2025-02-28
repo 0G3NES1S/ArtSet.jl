@@ -1,14 +1,12 @@
 module Tools
-    export Craft255, CraftRGB, CraftIn255, CraftInRGB, importc
+    export ColorsKit, CraftIn256, CraftInRGB, Craft256, CraftRGB, importc
 
-    # errors list
     ERRORS = Dict(
         :ERROR_1 => "[    ERROR    ] ArtSet.jl ERROR: COLOR.TYPE VALUE MUST BE UInt8(38); UInt8(48) OR STRING 'FOREGROUND'; 'BACKGROUND'",
         :ERROR_2 => "[    ERROR    ] ArtSet.jl ERROR: SYMBOL PROVIDED AS AN ARGUMENT IN Draw() FUNCTION DOES NOT EXIST"
     )
 
-    # Package colors set
-    Set = Dict(
+    ColorsKit = Dict(
         :FOREGROUND => Dict(
             :NEUTRAL => Dict(
                 :F_N_BLACK => "30",
@@ -75,7 +73,7 @@ module Tools
     STARTER = "["
     SEPARATOR = ";"
     FINALIZER = "m"
-    END = "$(ESCAPE_CODE)$(STARTER)$(Set[:ESPECIALS][:RESET])$(FINALIZER)"
+    END = "$(ESCAPE_CODE)$(STARTER)$(ColorsKit[:ESPECIALS][:RESET])$(FINALIZER)"
 
     mutable struct CraftInRGB
         BOLD::Bool
@@ -93,7 +91,7 @@ module Tools
         B::UInt8
     end
 
-    mutable struct CraftIn255
+    mutable struct CraftIn256
         BOLD::Bool
         FAINT::Bool
         ITALIC::Bool
@@ -107,9 +105,9 @@ module Tools
         COLOR::UInt8
     end
 
-    # Creates color in 255 Colors mode and it registers the color
-    function Craft255(; 
-        ID::Union{String, Symbol} = "C$(length(Set[:CRAFTED]))",
+    # Creates color in 256 Colors mode and it registers the color
+    function Craft256(; 
+        ID::Union{String, Symbol} = "C$(length(ColorsKit[:CRAFTED]))",
         BOLD::Bool = false,
         FAINT::Bool = false,
         ITALIC::Bool = false,
@@ -122,17 +120,18 @@ module Tools
         COLOR::UInt8 = UInt8(0)
         )
 
-        CURRENT_MODE::Int16 = Int16(5)
+        CURRENT_MODE::UInt8 = UInt8(5)
+
         if typeof(ID) == Symbol; else; ID = Symbol(ID); end
 
-        Color = Craft(BOLD, FAINT, ITALIC, UNDERLINE, BLINKING, INVERSE, HIDDEN, STRIKETHROUGH, TYPE, CURRENT_MODE, COLOR) # Creates the color
-        Set[:CRAFTED][ID] = Color # Registers the color
+        Color = CraftIn256(BOLD, FAINT, ITALIC, UNDERLINE, BLINKING, INVERSE, HIDDEN, STRIKETHROUGH, TYPE, CURRENT_MODE, COLOR) # Creates the color
+        ColorsKit[:CRAFTED][ID] = Color # Registers the color
         return Color # And then returns it
     end
 
-    # Creates color in RGB Colors mode and it registers the color
+    # RGB Colors Mode
     function CraftRGB(; 
-        ID::Union{String, Symbol} = "C$(length(Set[:CRAFTED]))",
+        ID::Union{String, Symbol} = "C$(length(ColorsKit[:CRAFTED]))",
         BOLD::Bool = false,
         FAINT::Bool = false,
         ITALIC::Bool = false,
@@ -147,36 +146,27 @@ module Tools
         B::UInt8 = UInt8(0)
         )
 
-        CURRENT_MODE::Int16 = Int16(5)
-        if typeof(ID) == Symbol; else; ID = Symbol(ID); end
+        CURRENT_MODE::UInt8 = UInt8(2)
 
-        Color = Craft(BOLD, FAINT, ITALIC, UNDERLINE, BLINKING, INVERSE, HIDDEN, STRIKETHROUGH, TYPE, CURRENT_MODE, R, G, B) # Creates the color
-        Set[:CRAFTED][ID] = Color # Registers the color
-        return Color # And then returns it
+        if typeof(ID) == Symbol; else; ID = Symbol(ID); end
+        
+        Color = CraftInRGB(BOLD, FAINT, ITALIC, UNDERLINE, BLINKING, INVERSE, HIDDEN, STRIKETHROUGH, TYPE, CURRENT_MODE, R, G, B)
+        ColorsKit[:CRAFTED][ID] = Color
+        return Color
     end
 
     # registers a manually created color
-    function importc(COLOR::Union{CraftIn255, CraftInRGB}; ID::Union{String, Symbol}="C$(length(Set[:CRAFTED]))")
+    function importc(COLOR::Union{CraftIn256, CraftInRGB}; ID::Union{String, Symbol}="C$(length(ColorsKit[:CRAFTED]))")
         if typeof(ID) == Symbol; else; ID = Symbol(ID); end
-        Set[:CRAFTED][ID] = COLOR
+        ColorsKit[:CRAFTED][ID] = COLOR
     end
 
-    # << Draw function macros >>
-
-    # Verifies if a value in Craft255 & CraftRGB is true;
-    # if it is: then adds the especific value to the
-    # String given as an argument 
-    macro CRAFT_BOOL_VALUE_CONVERTION(CONDITION, STRING, VALUE, SEPARATOR)
-        return quote
-            if $(esc(CONDITION)) == true; return "$($(esc(STRING)))$($(esc(VALUE)))$($(esc(SEPARATOR)))"; end
-        end
-    end
+    # -<< Draw Function >>-
 
     # prints the given text with the given color
-    function Draw(COLOR::Union{CraftIn255, CraftInRGB, Symbol}; TEXT="Hello World!")
+    function Draw(COLOR::Union{CraftIn256, CraftInRGB, Symbol}; TEXT="Hello World!")
         CURRENT_STRING = "$(ESCAPE_CODE)$(STARTER)"
 
-        # COLOR especial ARGS
         ARGUMENTS = nothing
         if typeof(COLOR) != Symbol
             ARGUMENTS = Dict(
@@ -185,48 +175,48 @@ module Tools
             )
         end
 
-        if COLOR == CraftIn255
+        if typeof(COLOR) == CraftIn256
             # to avoid macro flood: iterates over the Dict key length
             # and then places every respective value
             for i in 1:length(ARGUMENTS[:CONDITION])
-                CURRENT_STRING = CRAFT_BOOL_VALUE_CONVERTION(ARGUMENTS[:CONDITION][i], CURRENT_STRING, Set[:ESPECIALS][ARGUMENTS[:VALUE][i]])
+                if ARGUMENTS[:CONDITION][i] == true; CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][ARGUMENTS[:VALUE][i]])$(SEPARATOR)"; end
             end
 
             if COLOR.TYPE == UInt8(38) || COLOR.TYPE == "FOREGROUND"
-                CURRENT_STRING = "$(CURRENT_STRING)$(Set[:ESPECIALS][:FOREGROUND])$(SEPARATOR)"
+                CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][:FOREGROUND])$(SEPARATOR)"
             elseif COLOR.TYPE == UInt8(48) || COLOR.TYPE == "BACKGROUND"
-                CURRENT_STRING = "$(CURRENT_STRING)$(Set[:ESPECIALS][:BACKGROUND])$(SEPARATOR)"
+                CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][:BACKGROUND])$(SEPARATOR)"
             else
                 return error(ERRORS[:ERROR_1])
             end
 
-            CURRENT_STRING = "$(CURRENT_STRING)$(string(COLOR.COLOR))$(FINALIZER)$(TEXT)$(END)"
+            CURRENT_STRING = "$(CURRENT_STRING)$(COLOR.MODE)$(SEPARATOR)$(COLOR.COLOR)$(FINALIZER)$(TEXT)$(END)"
 
-        elseif COLOR == CraftInRGB
+        elseif typeof(COLOR) == CraftInRGB
 
             for i in 1:length(ARGUMENTS[:CONDITION])
-                CURRENT_STRING = CRAFT_BOOL_VALUE_CONVERTION(ARGUMENTS[:CONDITION][i], CURRENT_STRING, Set[:ESPECIALS][ARGUMENTS[:VALUE][i]])
+                if ARGUMENTS[:CONDITION][i] == true; CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][ARGUMENTS[:VALUE][i]])$(SEPARATOR)"; end
             end
 
             if COLOR.TYPE == UInt8(38) || COLOR.TYPE == "FOREGROUND"
-                CURRENT_STRING = "$(CURRENT_STRING)$(Set[:ESPECIALS][:FOREGROUND])$(SEPARATOR)"
+                CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][:FOREGROUND])$(SEPARATOR)"
             elseif COLOR.TYPE == UInt8(48) || COLOR.TYPE == "BACKGROUND"
-                CURRENT_STRING = "$(CURRENT_STRING)$(Set[:ESPECIALS][:BACKGROUND])$(SEPARATOR)"
+                CURRENT_STRING = "$(CURRENT_STRING)$(ColorsKit[:ESPECIALS][:BACKGROUND])$(SEPARATOR)"
             else
                 return error(ERRORS[:ERROR_1])
             end
 
-            CURRENT_STRING = "$(CURRENT_STRING)$(COLOR.R)$(SEPARATOR)$(COLOR.G)$(SEPARATOR)$(COLOR.B)$(FINALIZER)$(TEXT)$(END)"
+            CURRENT_STRING = "$(CURRENT_STRING)$(COLOR.MODE)$(SEPARATOR)$(COLOR.R)$(SEPARATOR)$(COLOR.G)$(SEPARATOR)$(COLOR.B)$(FINALIZER)$(TEXT)$(END)"
 
         elseif typeof(COLOR) == Symbol
-            SET_COLORS = [
-                Set[:FOREGROUND][:NEUTRAL],
-                Set[:FOREGROUND][:BRIGHT],
-                Set[:BACKGROUND][:NEUTRAL],
-                Set[:BACKGROUND][:BRIGHT]
+            KIT_COLORS = [
+                ColorsKit[:FOREGROUND][:NEUTRAL],
+                ColorsKit[:FOREGROUND][:BRIGHT],
+                ColorsKit[:BACKGROUND][:NEUTRAL],
+                ColorsKit[:BACKGROUND][:BRIGHT],
             ]
 
-            for ARRAY_VALUE in SET_COLORS
+            for ARRAY_VALUE in KIT_COLORS
                 for (DICT_KEY, DICT_VALUE) in ARRAY_VALUE
                     if DICT_KEY == COLOR && typeof(DICT_VALUE) == String
                         CURRENT_STRING = "$(CURRENT_STRING)$(DICT_VALUE)$(FINALIZER)$(TEXT)$(END)"
