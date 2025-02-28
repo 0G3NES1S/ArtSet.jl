@@ -14,7 +14,7 @@ WHITE_COLOR = Tools.Craft256(
     HIDDEN = false,
     STRIKETHROUGH = false,
     TYPE = UInt8(38),
-    COLOR = UInt8(256) # white
+    COLOR = UInt8(256)
 )
 ```
 

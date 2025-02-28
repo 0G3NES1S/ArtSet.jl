@@ -3,7 +3,20 @@
 ```julia
 using ArtSet
 
-# Using previous variables
+COLOR1 = Tools.CraftIn256(
+    BOLD = true,
+    FAINT = false,
+    ITALIC = true,
+    UNDERLINE = false,
+    BLINKING = true,
+    INVERSE = false,
+    HIDDEN = false,
+    STRIKETHROUGH = false,
+    TYPE = UInt8(38),
+    MODE = UInt8(5),
+    COLOR = UInt8(256)
+)
+
 Tools.importc(COLOR1; ID=:COLOR1)
 ```
 

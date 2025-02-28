@@ -3,10 +3,22 @@
 ```julia
 using ArtSet
 
-# Using colors from previous scripts
+MyColor = Tools.Craft256(
+    ID = "MyColorYeah!",
+    BOLD = true,
+    FAINT = false,
+    ITALIC = true,
+    UNDERLINE = false,
+    BLINKING = true,
+    INVERSE = false,
+    HIDDEN = false,
+    STRIKETHROUGH = false,
+    TYPE = UInt8(38),
+    COLOR = UInt8(100)
+)
+
 Tools.Draw(MyColor; TEXT="Hello World!")
 
-# Default Color value
 Tools.Draw(:F_N_RED; TEXT="Hello World!") # FOREGROUND NORMAL RED = F_N_RED
 
 ```
