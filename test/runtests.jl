@@ -2,7 +2,7 @@ using Test
 using ArtSet
 
 @testset "ArtSet.jl" begin
-    @test MyColor = Tools.Craft256(
+    @test TESTCOLOR1 = Tools.Craft256(
         ID = :MyColorYeah!,
         BOLD = true,
         FAINT = false,
@@ -16,7 +16,7 @@ using ArtSet
         COLOR = UInt8(255)
     )
 
-    @test MyColor2 = Tools.CraftRGB(
+    @test TESTCOLOR2 = Tools.CraftRGB(
         ID = "MyColor2Yeah!",
         BOLD = true,
         FAINT = false,
@@ -27,9 +27,39 @@ using ArtSet
         HIDDEN = false,
         STRIKETHROUGH = false,
         TYPE = UInt8(38),
-        R = UInt(134),
-        G = UInt(200),
-        B = UInt(10),
+        R = UInt8(134),
+        G = UInt8(200),
+        B = UInt8(10),
+    )
+
+    MyColor = Tools.Craft256(
+        ID = :MyColorYeah!,
+        BOLD = true,
+        FAINT = false,
+        ITALIC = true,
+        UNDERLINE = false,
+        BLINKING = true,
+        INVERSE = false,
+        HIDDEN = false,
+        STRIKETHROUGH = false,
+        TYPE = UInt8(38),
+        COLOR = UInt8(255)
+    )
+
+    MyColor2 = Tools.CraftRGB(
+        ID = "MyColor2Yeah!",
+        BOLD = true,
+        FAINT = false,
+        ITALIC = true,
+        UNDERLINE = false,
+        BLINKING = true,
+        INVERSE = false,
+        HIDDEN = false,
+        STRIKETHROUGH = false,
+        TYPE = UInt8(38),
+        R = UInt8(134),
+        G = UInt8(200),
+        B = UInt8(10),
     )
 
     @test Tools.Draw(MyColor2; TEXT="Hello World!")
@@ -43,7 +73,7 @@ using ArtSet
 
     # -<<---->>--
 
-    @test MyColor3 = Tools.CraftIn256(
+    @test TESTCOLOR3 = Tools.CraftIn256(
         BOLD = true,
         FAINT = false,
         ITALIC = true,
@@ -57,7 +87,37 @@ using ArtSet
         COLOR = UInt8(60)
     )
 
-    @test MyColor4 = Tools.CraftInRGB(
+    @test TESTCOLOR4 = Tools.CraftInRGB(
+        BOLD = true,
+        FAINT = false,
+        ITALIC = true,
+        UNDERLINE = false,
+        BLINKING = true,
+        INVERSE = false,
+        HIDDEN = false,
+        STRIKETHROUGH = false,
+        TYPE = UInt8(38),
+        MODE = UInt8(5),
+        R = UInt8(10),
+        G = UInt8(20),
+        B = UInt8(30)
+    )
+
+    MyColor3 = Tools.CraftIn256(
+        BOLD = true,
+        FAINT = false,
+        ITALIC = true,
+        UNDERLINE = false,
+        BLINKING = true,
+        INVERSE = false,
+        HIDDEN = false,
+        STRIKETHROUGH = false,
+        TYPE = UInt8(38),
+        MODE = UInt8(5),
+        COLOR = UInt8(60)
+    )
+
+    MyColor4 = Tools.CraftInRGB(
         BOLD = true,
         FAINT = false,
         ITALIC = true,
