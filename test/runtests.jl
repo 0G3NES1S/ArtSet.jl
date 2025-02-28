@@ -73,8 +73,8 @@ using ArtSet
         B = UInt8(30)
     )
 
-    @ŧest Tools.importc(MyColor3; ID=:MyColor3Yeah!)
-    @ŧest Tools.importc(MyColor4; ID="MyColor4Yeah!")
+    @test Tools.importc(MyColor3; ID=:MyColor3Yeah!)
+    @test Tools.importc(MyColor4; ID="MyColor4Yeah!")
 
     @test Tools.Draw(Tools.ColorsKit[:CRAFTED][:MyColor3Yeah!]; TEXT="Hello World!")
     @test Tools.Draw(Tools.ColorsKit[:CRAFTED][:MyColor4Yeah!]; TEXT="Hello World!")
