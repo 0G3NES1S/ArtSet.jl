@@ -14,8 +14,8 @@ COLOR1 = Tools.CraftIn256(
     HIDDEN = false,
     STRIKETHROUGH = false,
     TYPE = UInt8(38),
-    MODE = UInt8(5), # Must be 5 if it is in range from 0 to 256 only
-    COLOR = UInt8(256) # white
+    MODE = UInt8(5),
+    COLOR = UInt8(256)
 )
 
 ```
