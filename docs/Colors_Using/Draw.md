@@ -4,17 +4,17 @@
 using ArtSet
 
 MyColor = Tools.Craft256(
-    ID = "MyColorYeah!",
-    BOLD = true,
-    FAINT = false,
-    ITALIC = true,
-    UNDERLINE = false,
-    BLINKING = true,
-    INVERSE = false,
-    HIDDEN = false,
-    STRIKETHROUGH = false,
-    TYPE = UInt8(38),
-    COLOR = UInt8(100)
+    ID! = "MyColorYeah!",
+    BOLD! = true,
+    FAINT! = false,
+    ITALIC! = true,
+    UNDERLINE! = false,
+    BLINKING! = true,
+    INVERSE! = false,
+    HIDDEN! = false,
+    STRIKETHROUGH! = false,
+    TYPE! = UInt8(38),
+    COLOR! = UInt8(100)
 )
 
 Tools.Draw(MyColor; TEXT="Hello World!")
