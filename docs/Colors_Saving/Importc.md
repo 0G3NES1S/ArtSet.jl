@@ -20,7 +20,7 @@ COLOR1 = Tools.CraftIn256(
 Tools.importc(COLOR1; ID=:COLOR1)
 ```
 
-#### `importc()` just imports the color created manually to the ColorsKit Dict
+#### `importc()` just imports the color created manually to the [ColorsKit Dict](https://github.com/0G3NES1S/ArtSet.jl/tree/main/docs/Colors_Saving/ColorsKit.md)
 
 ### ARGS:
 

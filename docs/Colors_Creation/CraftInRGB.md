@@ -1,10 +1,10 @@
-# `CraftIn256()`
+# `CraftInRGB()`
 
 ```julia
 
 using ArtSet
 
-COLOR1 = Tools.CraftIn256(
+COLOR2 = Tools.CraftInRGB(
     BOLD = true,
     FAINT = false,
     ITALIC = true,
@@ -14,13 +14,15 @@ COLOR1 = Tools.CraftIn256(
     HIDDEN = false,
     STRIKETHROUGH = false,
     TYPE = UInt8(38),
-    MODE = UInt8(5),
-    COLOR = UInt8(256)
+    MODE = UInt8(2),
+    R = UInt8(255),
+    G = UInt8(255),
+    B = UInt8(255)
 )
 
 ```
 
-#### `CraftIn256` It's a mutable struct that creates the color itself, specifying his parameters
+#### `CraftInRGB` Same as [CraftIn256](https://github.com/0G3NES1S/ArtSet.jl/blob/main/docs/Colors_Creation/Craft256.md) Instead it has a longer range, from: (0,0,0) to (255,255,255). 
 
 ### ARGS:
 
@@ -34,8 +36,9 @@ COLOR1 = Tools.CraftIn256(
 | `INVERSE`          | **BOOL** | **inverse** style
 | `HIDDEN`           | **BOOL** | **hidden** style
 | `STRIKETHROUGH`    | **BOOL** | **strikethrough** style
-| `TYPE`             | **UInt8**, **String** | Select if the text *formatting* is for the foreground or *background* of the text.
 | `MODE`             | **UInt8** | Must be **UInt8(5)** if its a range from **0** to **256** and **UInt8(2)** if it's a range from **(0,0,0)** to **(255,255,255)**
-| `COLOR`            | **UInt8** | A color from **0** to **256** |
+| `R`            | **UInt8** | A color from **0** to **255** |
+| `G`            | **UInt8** | A color from **0** to **255** |
+| `B`            | **UInt8** | A color from **0** to **255** |
 
 ----

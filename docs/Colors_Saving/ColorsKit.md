@@ -2,7 +2,7 @@
 
 ----
 
-#### `ColorsKit` Is a Dict that saves every color of the package, this Dict has from default colors to crafted colors that the user created, `ColorsDict` has sub-dicts with the objetive of organizing every color that ANSI escape codes can format.
+#### `ColorsKit` Is a Dict that saves every color of the package, this Dict has from default colors to crafted colors that the user created, it has sub-dicts with the objetive of organizing every color that ANSI escape codes can format.
 
 ```julia
 using ArtSet
