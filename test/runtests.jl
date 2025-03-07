@@ -89,10 +89,10 @@ end
 
 @testset "randCraft256 && randCraftRGB" begin
 
-    MyColor1 = Tools.randCraft256(; TYPE = UInt8(38), ID = "C138")
-    MyColor2 = Tools.randCraft256(; TYPE = UInt8(48), ID = "C248")
-    MyColor3 = Tools.randCraftRGB(; TYPE = UInt8(38), ID = "C338")
-    MyColor4 = Tools.randCraftRGB(; TYPE = UInt8(48), ID = "C448")
+    MyColor1 = Tools.randCraft256(; TYPE! = UInt8(38), ID! = "C138")
+    MyColor2 = Tools.randCraft256(; TYPE! = UInt8(48), ID! = "C248")
+    MyColor3 = Tools.randCraftRGB(; TYPE! = UInt8(38), ID! = "C338")
+    MyColor4 = Tools.randCraftRGB(; TYPE! = UInt8(48), ID! = "C448")
 
     Tools.Draw(MyColor1; TEXT="C138")
     Tools.Draw(MyColor2; TEXT="C248")
