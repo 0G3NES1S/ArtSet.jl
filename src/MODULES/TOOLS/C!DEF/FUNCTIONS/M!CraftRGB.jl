@@ -21,7 +21,7 @@ module M!CraftRGB
         B!::UInt8 = UInt8(0)
         )
 
-        if typeof(ID!) == Symbol; else; ID = Symbol(ID!); end
+        if typeof(ID!) == Symbol; else; ID! = Symbol(ID!); end
         
         Color = M!CraftStructs.CraftInRGB(BOLD = BOLD!, FAINT = FAINT!, ITALIC = ITALIC!, UNDERLINE = UNDERLINE!, BLINKING = BLINKING!, INVERSE = INVERSE!, HIDDEN = HIDDEN!, STRIKETHROUGH = STRIKETHROUGH!, TYPE = TYPE!, MODE = UInt8(2), R = R!, G = G!, B = B!)
         M!ColorsKit.ColorsKit[:CRAFTED][ID!] = Color 
