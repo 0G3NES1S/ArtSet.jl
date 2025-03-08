@@ -2,7 +2,7 @@ module M!CraftStructs
 
     export CraftIn256, CraftInRGB
 
-    @kwdef mutable struct CraftIn256
+    Base.@kwdef mutable struct CraftIn256
         BOLD::Bool = false
         FAINT::Bool = false
         ITALIC::Bool = false
@@ -16,7 +16,7 @@ module M!CraftStructs
         COLOR::UInt8 = UInt8(0)
     end
 
-    @kwdef mutable struct CraftInRGB
+    Base.@kwdef mutable struct CraftInRGB
         BOLD::Bool = false
         FAINT::Bool = false
         ITALIC::Bool = false
